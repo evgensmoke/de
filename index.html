@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренажёр по математике для Насти | мм, см, дм</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- html2canvas для скриншотов -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            background-image: radial-gradient(#334155 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        .comic-font {
+            font-family: 'Comic Neue', cursive;
+        }
+
+        /* Линейка с делениями */
+        .ruler-bg {
+            background: repeating-linear-gradient(
+                90deg,
+                #fbbf24 0px,
+                #fbbf24 2px,
+                transparent 2px,
+                transparent 10px
+            );
+        }
+
+        .card-glow {
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.15);
+        }
+
+        /* Анимации */
+        @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6">
+
+    <div class="max-w-4xl mx-auto w-full space-y-6">
+
+        <!-- Шапка -->
+        <header class="text-center space-y-2">
+            <div class="inline-block bg-rose-500/20 text-rose-300 font-extrabold px-4 py-1.5 rounded-full text-sm tracking-wider border border-rose-500/30">
+                ☠️ Секретный Математический Бункер Насти 📐
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-amber-400 tracking-tight comic-font">
+                Миллиметры, Сантиметры и Дециметры
+            </h1>
+            <p class="text-sm sm:text-lg text-slate-300 font-bold">
+                Внимание, Настя! Ошибка в миллиметрах может стоить Вселенной одного дециметра! 🔥
+            </p>
+        </header>
+
+        <!-- Памятка и Наглядная Линейка -->
+        <section class="bg-slate-800/90 rounded-3xl p-5 sm:p-7 card-glow border-2 border-rose-500/30 backdrop-blur-md">
+            <h2 class="text-xl sm:text-2xl font-black text-rose-400 mb-4 flex items-center gap-2 comic-font">
+                <span>🧪</span> Инструкция по выживанию (Памятка):
+            </h2>
+
+            <!-- Формулы -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-amber-500/40 text-center">
+                    <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Крошки-миллиметры</span>
+                    <span class="text-xl font-black text-amber-400">1 см = 10 мм</span>
+                </div>
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-emerald-500/40 text-center">
+                    <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Золотой стандарт</span>
+                    <span class="text-xl font-black text-emerald-400">1 дм = 10 см</span>
+                </div>
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-purple-500/40 text-center">
+                    <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Мега-перевод</span>
+                    <span class="text-xl font-black text-purple-400">1 дм = 100 мм</span>
+                </div>
+            </div>
+
+            <!-- Интерактивная наглядная линейка-схема -->
+            <div class="bg-slate-900 rounded-2xl p-4 border border-slate-700 space-y-4">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider text-center">
+                    📏 Наглядное сравнение отрезков:
+                </div>
+                
+                <div class="space-y-3 text-sm">
+                    <!-- 1 мм -->
+                    <div class="flex items-center gap-3">
+                        <span class="w-16 font-extrabold text-amber-400 text-right">1 мм:</span>
+                        <div class="h-4 bg-amber-400 rounded" style="width: 2px;" title="1 мм"></div>
+                        <span class="text-xs text-slate-400">(Едва заметная крошка!)</span>
+                    </div>
+                    <!-- 1 см -->
+                    <div class="flex items-center gap-3">
+                        <span class="w-16 font-extrabold text-emerald-400 text-right">1 см:</span>
+                        <div class="h-4 bg-emerald-400 rounded flex items-center justify-center text-[10px] text-slate-950 font-bold" style="width: 40px;">
+                            10 мм
+                        </div>
+                        <span class="text-xs text-slate-400">(Ширина ноготка)</span>
+                    </div>
+                    <!-- 1 дм -->
+                    <div class="flex items-center gap-3 overflow-x-auto py-1">
+                        <span class="w-16 font-extrabold text-purple-400 text-right shrink-0">1 дм:</span>
+                        <div class="h-5 bg-purple-500 rounded flex items-center justify-between px-2 text-[11px] text-white font-black shrink-0" style="width: 280px;">
+                            <span>| 1 см</span>
+                            <span>| 2</span>
+                            <span>| 3</span>
+                            <span>| 4</span>
+                            <span>| 5</span>
+                            <span>| 6</span>
+                            <span>| 7</span>
+                            <span>| 8</span>
+                            <span>| 9</span>
+                            <span>10 см |</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Главный контейнер теста -->
+        <main id="quiz-container" class="bg-slate-800/90 rounded-3xl p-5 sm:p-8 card-glow border-2 border-slate-700 relative">
+            
+            <!-- Индикаторы и прогресс -->
+            <div class="flex justify-between items-center mb-4 text-sm font-extrabold">
+                <div class="flex items-center gap-2 text-amber-400 text-base">
+                    <span>🔥</span> <span id="score-display">Баллы: 0</span>
+                </div>
+                <div class="text-slate-400">
+                    Вопрос <span id="current-q-num" class="text-rose-400">1</span> из <span id="total-q-num">20</span>
+                </div>
+            </div>
+
+            <!-- Шкала прогресса -->
+            <div class="w-full bg-slate-900 h-3 rounded-full overflow-hidden mb-6 border border-slate-700">
+                <div id="progress-bar" class="bg-gradient-to-r from-rose-500 to-amber-500 h-full transition-all duration-300 rounded-full" style="width: 5%"></div>
+            </div>
+
+            <!-- Вопрос -->
+            <div class="text-center space-y-3 mb-6">
+                <div id="q-category" class="inline-block bg-slate-900 text-rose-400 font-bold px-3 py-1 rounded-xl text-xs uppercase tracking-wider border border-rose-500/20">
+                    Категория: Сравнение
+                </div>
+                <div id="question-text" class="text-2xl sm:text-4xl font-black text-white bg-slate-900/60 p-4 sm:p-6 rounded-2xl border border-slate-700 tracking-wide comic-font">
+                    Загрузка...
+                </div>
+            </div>
+
+            <!-- Варианты ответов -->
+            <div id="options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+                <!-- Опции через JS -->
+            </div>
+
+            <!-- Блок обратной связи для Насти -->
+            <div id="feedback-box" class="hidden rounded-2xl p-4 sm:p-5 mb-6 border-2 transition-all">
+                <div class="flex items-start gap-3">
+                    <span id="feedback-icon" class="text-3xl"></span>
+                    <div class="space-y-1">
+                        <h4 id="feedback-title" class="text-lg font-black comic-font"></h4>
+                        <p id="feedback-text" class="text-sm sm:text-base font-semibold leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка Далее -->
+            <div class="flex justify-end">
+                <button id="next-btn" onclick="nextQuestion()" class="hidden bg-rose-600 hover:bg-rose-500 text-white font-black px-8 py-3.5 rounded-2xl shadow-lg transition-all transform active:scale-95 text-lg flex items-center gap-2">
+                    <span>Дальше, Настя! 🚀</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Финальная карточка с результатом (для скриншота) -->
+        <section id="result-screen" class="hidden bg-slate-900 rounded-3xl p-6 sm:p-10 border-4 border-rose-500 text-center space-y-6 relative overflow-hidden">
+            
+            <!-- Карточка, которая попадет на скриншот -->
+            <div id="share-card" class="bg-slate-800 p-6 sm:p-8 rounded-2xl border-2 border-slate-700 space-y-4 text-center">
+                <div class="text-xs uppercase font-black tracking-widest text-rose-400">Официальный Сертификат Насти</div>
+                <div class="text-5xl sm:text-7xl">👑📏</div>
+                <h2 class="text-2xl sm:text-4xl font-black text-amber-400 comic-font">Настя — Повелительница Дециметров!</h2>
+                
+                <p class="text-slate-300 font-semibold text-sm sm:text-base max-w-md mx-auto" id="final-comment">
+                    Загрузка итогов...
+                </p>
+
+                <div class="bg-slate-900/90 border border-amber-500/40 rounded-2xl p-4 inline-block mx-auto">
+                    <div class="text-xs text-slate-400 font-bold uppercase">Итоговый счёт:</div>
+                    <div class="text-4xl sm:text-5xl font-black text-amber-400 my-1" id="final-score">0 / 100</div>
+                    <div class="text-xs text-emerald-400 font-extrabold" id="final-accuracy">Точность: 100%</div>
+                </div>
+
+                <div class="text-[10px] text-slate-500 uppercase tracking-wider pt-2">
+                    Пройдено в секретном тренажёре по линейкам • 2 класс
+                </div>
+            </div>
+
+            <!-- Кнопки действий -->
+            <div class="flex flex-wrap justify-center gap-4 pt-2">
+                <button onclick="shareResult()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-black px-8 py-4 rounded-2xl shadow-xl transition-all transform active:scale-95 text-lg flex items-center gap-2">
+                    <span>📸 Поделиться результатом (Скриншот)</span>
+                </button>
+                <button onclick="restartQuiz()" class="bg-slate-700 hover:bg-slate-600 text-white font-black px-6 py-4 rounded-2xl transition-all transform active:scale-95 text-base flex items-center gap-2 border border-slate-500">
+                    <span>🔄 Пройти ещё раз</span>
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Модальное окно с готовым скриншотом -->
+    <div id="share-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-800 rounded-3xl p-6 max-w-md w-full border-2 border-rose-500 space-y-4 text-center">
+            <h3 class="text-2xl font-black text-amber-400 comic-font">Твой скриншот готов, Настя! 🎉</h3>
+            <p class="text-xs text-slate-300">Сохрани картинку или отправь её друзьям в соцсетях (Max, Telegram, WhatsApp):</p>
+            
+            <div id="screenshot-preview-container" class="rounded-xl overflow-hidden border border-slate-600 max-h-60 overflow-y-auto">
+                <!-- Картинка загрузится сюда -->
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <a id="download-img-btn" download="nastya_math_result.png" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl block text-center">
+                    💾 Скачать картинку
+                </a>
+                <button onclick="closeModal()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 rounded-xl text-sm">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-xs font-bold text-slate-500 mt-8 mb-2">
+        Специально для Насти • Все миллиметры находятся под строгим контролем 📏
+    </footer>
+
+    <script>
+        // База из 20 вопросов с черным юмором для Насти
+        const questionsData = [
+            // Сравнение из примера
+            {
+                cat: "Сравнение величин",
+                question: "Сравни: 45 см ⚪ 4 дм 5 см",
+                options: ["45 см > 4 дм 5 см", "45 см = 4 дм 5 см", "45 см < 4 дм 5 см"],
+                correct: 1,
+                correctHumor: "Отлично, Настя! Ни один миллиметр не сбежал в астрал. Ведь 4 дм = 40 см, плюс 5 см = 45 см!",
+                wrongHumor: "Ошибка, Настя! Из-за этого знака где-то во Вселенной сжался один дециметр. Запомни: 4 дм 5 см — это ровно 45 см!"
+            },
+            {
+                cat: "Сравнение величин",
+                question: "Сравни: 36 см ⚪ 4 дм",
+                options: ["36 см < 4 дм", "36 см = 4 дм", "36 см > 4 дм"],
+                correct: 0,
+                correctHumor: "Точно, Настя! 4 дм — это 40 см, а 36 меньше 40. Линейчатый монстр тебя сегодня не съест!",
+                wrongHumor: "Настя, ты почти отдала монстру 4 сантиметра! 4 дм = 40 см, значит 36 см МЕНЬШЕ!"
+            },
+            {
+                cat: "Верно ли равенство?",
+                question: "Верно ли выражение: 1 дм < 100 мм ?",
+                options: ["Верно! ✅", "Ошибка! ❌ (должно быть =)"],
+                correct: 1,
+                correctHumor: "Молодец, Настя! Ты разоблачила подлое врущее равенство. 1 дм = 10 см = 100 мм, они РАВНЫ!",
+                wrongHumor: "Эх, Настя... Из-за этого отрезки стали кривыми! 1 дм = 100 мм, тут должен стоять знак =!"
+            },
+            {
+                cat: "Сравнение из практики",
+                question: "Сравни: 21 мм ⚪ 3 см",
+                options: ["21 мм = 3 см", "21 мм > 3 см", "21 мм < 3 см"],
+                correct: 2,
+                correctHumor: "Победа! 3 см — это 30 мм, поэтому 21 мм намного скромнее и меньше. Строители спасены!",
+                wrongHumor: "Настя, если так измерять, у дома построят крышу на метр ниже! 3 см = 30 мм, а 21 мм МЕНЬШЕ!"
+            },
+            {
+                cat: "Проверка равенства",
+                question: "Верно ли выражение: 60 мм = 6 см ?",
+                options: ["Верно! ✅", "Ошибка! ❌"],
+                correct: 0,
+                correctHumor: "Бинго, Настя! В 1 см содержится 10 мм, значит 60 мм — это точно 6 см!",
+                wrongHumor: "Настя, ты усомнилась в священных правилах математики! 60 мм — это идеальные 6 см!"
+            },
+            {
+                cat: "Проверка равенства",
+                question: "Верно ли: 10 мм = 1 см ?",
+                options: ["Верно! ✅", "Ошибка! ❌"],
+                correct: 0,
+                correctHumor: "Ура, Настя! Ты спасла сантиметровую линейку от аннигиляции!",
+                wrongHumor: "Настя, 10 мм обиделись и ушли из учебника! 10 мм — это РОВНО 1 см!"
+            },
+            // Перевод величин
+            {
+                cat: "Перевод величин",
+                question: "Переведи: 5 дм 3 см = ? см",
+                options: ["53 см", "35 см", "503 см", "8 см"],
+                correct: 0,
+                correctHumor: "5 дм = 50 см, плюс 3 см = 53 см. Твой мозг работает как квантовый суперкомпьютер, Настя!",
+                wrongHumor: "Настя! Ты случайно превратила линейку в макаронину. 5 дм (50 см) + 3 см = 53 см!"
+            },
+            {
+                cat: "Перевод величин",
+                question: "Переведи: 70 мм = ? см",
+                options: ["700 см", "7 см", "17 см", "70 см"],
+                correct: 1,
+                correctHumor: "Идеально! Делим на 10 и получаем 7 см. Никаких лишних нулей!",
+                wrongHumor: "Упс! Если 70 мм превратить в 700 см, получится гигантский мутант. Правильно: 7 см!"
+            },
+            {
+                cat: "Перевод величин",
+                question: "Переведи: 2 дм = ? мм",
+                options: ["20 мм", "200 мм", "2000 мм", "2 мм"],
+                correct: 1,
+                correctHumor: "200 мм! Настя, твои математические заклинания сегодня особенно сильны!",
+                wrongHumor: "Настя, где-то плачет один дециметр. В 1 дм = 100 мм, значит в 2 дм = 200 мм!"
+            },
+            {
+                cat: "Сравнение",
+                question: "Сравни: 8 см 2 мм ⚪ 80 мм",
+                options: ["8 см 2 мм > 80 мм", "8 см 2 мм = 80 мм", "8 см 2 мм < 80 мм"],
+                correct: 0,
+                correctHumor: "Да! 8 см 2 мм = 82 мм, а 82 больше 80. Крошечные 2 мм решили исход битвы!",
+                wrongHumor: "Не-а, Настя! 8 см 2 мм — это 82 мм, что БОЛЬШЕ, чем 80 мм!"
+            },
+            // Вычисления
+            {
+                cat: "Вычисления величин",
+                question: "Вычисли: 4 см 5 мм + 5 мм = ?",
+                options: ["4 см 10 мм", "5 см", "50 см", "45 мм"],
+                correct: 1,
+                correctHumor: "Гениально! 5 мм + 5 мм = 10 мм (это 1 см). 4 см + 1 см = 5 см! Чётко и без мусора!",
+                wrongHumor: "Почти! Запомни, Настя: 10 мм сразу превращаются в 1 см, поэтому в сумме получается ровно 5 см!"
+            },
+            {
+                cat: "Вычисления величин",
+                question: "Вычисли: 1 дм - 3 см = ?",
+                options: ["7 см", "2 см", "97 см", "7 мм"],
+                correct: 0,
+                correctHumor: "1 дм = 10 см. 10 - 3 = 7 см. Твой сокрушительный удар по задаче прошёл успешно!",
+                wrongHumor: "Настя, 1 дм — это 10 см! Из 10 вычитаем 3 и получаем 7 см!"
+            },
+            {
+                cat: "Сравнение",
+                question: "Сравни: 100 мм ⚪ 10 см",
+                options: ["100 мм > 10 см", "100 мм = 10 см", "100 мм < 10 см"],
+                correct: 1,
+                correctHumor: "Абсолютное равенство! 100 мм и 10 см — это одно и то же лицо под разными масками!",
+                wrongHumor: "Настя, тебя запутали нули! 10 см = 100 мм, между ними знак РАВНО!"
+            },
+            {
+                cat: "Поиск ошибки",
+                question: "Верно ли выражение: 4 дм > 42 см ?",
+                options: ["Верно! ✅", "Ошибка! ❌ (4 дм = 40 см, а 40 < 42)"],
+                correct: 1,
+                correctHumor: "Верно подмечено, Настя! 4 дм — это всего 40 см, они меньше 42 см!",
+                wrongHumor: "Эх, Настя! 4 дм — это 40 см, а 40 никак не может быть больше 42!"
+            },
+            {
+                cat: "Перевод величин",
+                question: "Вырази в миллиметрах: 3 см 7 мм",
+                options: ["370 мм", "37 мм", "73 мм", "307 мм"],
+                correct: 1,
+                correctHumor: "37 мм! Быстро, чётко и без лишних жертв!",
+                wrongHumor: "Упс! 3 см = 30 мм, плюс 7 мм = 37 мм. Без лишних нулей, Настя!"
+            },
+            {
+                cat: "Сравнение",
+                question: "Сравни: 6 см ⚪ 65 мм",
+                options: ["6 см < 65 мм", "6 см = 65 мм", "6 см > 65 мм"],
+                correct: 0,
+                correctHumor: "Правильно! 6 см — это 60 мм, а 65 мм больше!",
+                wrongHumor: "Настя, 6 см = 60 мм, а 60 МЕНЬШЕ, чем 65 мм!"
+            },
+            {
+                cat: "Вычисления величин",
+                question: "Вычисли: 2 дм 4 см + 6 см = ?",
+                options: ["3 дм", "24 см", "30 дм", "20 см"],
+                correct: 0,
+                correctHumor: "24 см + 6 см = 30 см = 3 дм! Настя, ты математический ниндзя!",
+                wrongHumor: "Смотри: 4 см + 6 см = 10 см (это 1 дм). 2 дм + 1 дм = 3 дм!"
+            },
+            {
+                cat: "Вычисления величин",
+                question: "Вычисли: 5 см - 8 мм = ?",
+                options: ["42 мм", "4 см 2 мм", "Оба ответа верны! ✨"],
+                correct: 2,
+                correctHumor: "Хитрый вопрос! 5 см = 50 мм. 50 - 8 = 42 мм, а это и есть 4 см 2 мм!",
+                wrongHumor: "Ловушка! 50 мм - 8 мм = 42 мм = 4 см 2 мм. Оба варианта были правильными!"
+            },
+            {
+                cat: "Поиск ошибки",
+                question: "Верно ли равенство: 90 мм = 9 дм ?",
+                options: ["Верно! ✅", "Ошибка! ❌ (90 мм = 9 см)"],
+                correct: 1,
+                correctHumor: "Супер! 9 дм — это целых 900 мм! А 90 мм — это всего лишь 9 см.",
+                wrongHumor: "Ого, Настя! 9 дм — это огромная линейка в 90 см! А 90 мм — это скромные 9 см!"
+            },
+            {
+                cat: "Финал!",
+                question: "Что больше: 1 дм или 99 мм?",
+                options: ["1 дм (он равен 100 мм)", "99 мм", "Они равны"],
+                correct: 0,
+                correctHumor: "УРА! 1 дм = 100 мм, он победил 99 мм на 1 крошечный миллиметр!",
+                wrongHumor: "Всего 1 мм решил всё! 1 дм = 100 мм, а 100 БОЛЬШЕ, чем 99!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            const data = questionsData[currentQuestion];
+
+            document.getElementById('current-q-num').innerText = currentQuestion + 1;
+            document.getElementById('total-q-num').innerText = questionsData.length;
+            document.getElementById('score-display').innerText = `Баллы: ${score}`;
+            
+            const progressPercent = ((currentQuestion + 1) / questionsData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            document.getElementById('q-category').innerText = `Категория: ${data.cat}`;
+            document.getElementById('question-text').innerText = data.question;
+
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+
+            data.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-2xl border-2 border-slate-700 bg-slate-900/80 hover:bg-slate-700 hover:border-rose-400 font-bold text-slate-200 text-base sm:text-lg transition-all transform active:scale-98 flex items-center justify-between";
+                btn.innerHTML = `
+                    <span>${optText}</span>
+                    <span class="w-6 h-6 rounded-full border-2 border-slate-600 flex items-center justify-center text-xs text-transparent font-black check-mark">✓</span>
+                `;
+                btn.onclick = () => selectOption(index);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const data = questionsData[currentQuestion];
+            const isCorrect = selectedIndex === data.correct;
+            const optionsGrid = document.getElementById('options-grid');
+            const buttons = optionsGrid.children;
+
+            if (isCorrect) {
+                score += 5;
+                document.getElementById('score-display').innerText = `Баллы: ${score}`;
+            }
+
+            Array.from(buttons).forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-700', 'hover:border-rose-400');
+
+                if (idx === data.correct) {
+                    btn.classList.add('bg-emerald-950', 'border-emerald-500', 'text-emerald-200');
+                    const mark = btn.querySelector('.check-mark');
+                    mark.classList.remove('border-slate-600', 'text-transparent');
+                    mark.classList.add('bg-emerald-500', 'border-emerald-500', 'text-slate-950');
+                } else if (idx === selectedIndex && !isCorrect) {
+                    btn.classList.add('bg-rose-950', 'border-rose-500', 'text-rose-200');
+                } else {
+                    btn.classList.add('opacity-40');
+                }
+            });
+
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+
+            feedbackBox.classList.remove('hidden', 'bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200', 'bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+                feedbackIcon.innerText = '💀👍';
+                feedbackTitle.innerText = 'Отлично, Настя!';
+                feedbackText.innerHTML = data.correctHumor;
+            } else {
+                feedbackBox.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
+                feedbackIcon.innerText = '⚠️💀';
+                feedbackTitle.innerText = 'Алярм, Настя!';
+                feedbackText.innerHTML = data.wrongHumor;
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questionsData.length) {
+                loadQuestion();
+            } else {
+                showFinalResults();
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resultScreen = document.getElementById('result-screen');
+            resultScreen.classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = `${score} / 100`;
+            const accuracy = (score / 100) * 100;
+            document.getElementById('final-accuracy').innerText = `Точность: ${accuracy}%`;
+
+            const commentElem = document.getElementById('final-comment');
+            if (score === 100) {
+                commentElem.innerText = "Настя, это абсолютный триумф! Ни один дециметр во Вселенной не пострадал. Линейки склоняются перед тобой!";
+            } else if (score >= 70) {
+                commentElem.innerText = "Отличная работа, Настя! Несколько миллиметров сбежали, но в целом ты готова строить замки!";
+            } else {
+                commentElem.innerText = "Настя, из-за пары ошибок пара линейчатых монстров вырвалась на свободу! Повтори памятку и попробуй ещё раз!";
+            }
+        }
+
+        async function shareResult() {
+            const shareCard = document.getElementById('share-card');
+            
+            try {
+                // Создаем скриншот карточки
+                const canvas = await html2canvas(shareCard, {
+                    backgroundColor: '#1e293b',
+                    scale: 2
+                });
+
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'nastya_result.png', { type: 'image/png' });
+
+                    // Пробуем вызвать сис-емный Web Share API (мобильные, Telegram, Max и т.д.)
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        try {
+                            await navigator.share({
+                                title: 'Результат Насти по Математике 📏',
+                                text: `Настя прошла тренажёр по миллиметрам, сантиметрам и дециметрам с результатом ${score}/100 баллов! 🚀`,
+                                files: [file]
+                            });
+                            return;
+                        } catch (err) {
+                            console.log("Поделиться отменено пользователем");
+                        }
+                    }
+
+                    // Фолбэк: Показываем модальное окно с готовой картинкой для сохранения/отправки
+                    const imgUrl = URL.createObjectURL(blob);
+                    const previewContainer = document.getElementById('screenshot-preview-container');
+                    previewContainer.innerHTML = `<img src="${imgUrl}" class="w-full h-auto rounded-lg" alt="Скриншот результата">`;
+                    
+                    const downloadBtn = document.getElementById('download-img-btn');
+                    downloadBtn.href = imgUrl;
+
+                    document.getElementById('share-modal').classList.remove('hidden');
+                });
+            } catch (error) {
+                alert("Не удалось создать скриншот. Попробуй еще раз!");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('share-modal').classList.add('hidden');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
